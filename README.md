@@ -7,11 +7,11 @@ manage their files through a set of RESTful APIs. The service should also suppor
 uploaded file, such as the file name, creation timestamp, and more.
 
 **Features API**
-POST </files/upload>
-GET </get/{id}>
-GETALL </files/getall>
-PUT </files/update/{id}>
-DELETE </files/delete/{id}>
+POST ```/files/upload```
+GET ```/get/{id}```
+GETALL ```/files/getall```
+PUT ```/files/update/{id}```
+DELETE ```/files/delete/{id}```
 
 **Further Considerations**
 
