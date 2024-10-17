@@ -1,0 +1,7 @@
+com/example/springapi/api/model/ResponseMessage.class
+com/example/springapi/service/FileUploadService.class
+com/example/springapi/api/repository/FileMetadataRepository.class
+com/example/springapi/SpringApiApplication.class
+com/example/springapi/api/model/FileDB.class
+com/example/springapi/api/model/ResponseFile.class
+com/example/springapi/api/controller/FileUploadController.class

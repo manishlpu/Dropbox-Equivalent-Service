@@ -4,6 +4,7 @@ import com.example.springapi.api.model.FileDB;
 import com.example.springapi.api.repository.FileMetadataRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -11,11 +12,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 @Service
 public class FileUploadService {
 
+    @Getter
     String id = "";
     Date date = new Date();
     @Autowired
@@ -24,9 +27,9 @@ public class FileUploadService {
     private EntityManager entityManager;
 
     @Transactional
-    public FileDB store(MultipartFile file) throws IOException {
+    public void store(MultipartFile file) throws IOException {
         // TODO: Implement exception handling
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         FileDB fileDB = new FileDB();
         fileDB.setName(file.getOriginalFilename());
         fileDB.setSize(file.getSize());
@@ -35,11 +38,7 @@ public class FileUploadService {
         fileDB.setType(file.getContentType());
         entityManager.persist(fileDB);
         id = fileDB.getId();
-        return fileMetadataRepository.save(fileDB);
-    }
-
-    public String getId() {
-        return id;
+        fileMetadataRepository.save(fileDB);
     }
 
     public FileDB getFile(String id) {
@@ -52,7 +51,7 @@ public class FileUploadService {
         return fileMetadataRepository.findAll().stream();
     }
 
-    public FileDB updateFile(MultipartFile file, String fileId) throws IOException {
+    public void updateFile(MultipartFile file, String fileId) throws IOException {
         // TODO: Implement exception handling
         FileDB fileDB;
         fileDB = fileMetadataRepository.findById(fileId).get();
@@ -61,7 +60,7 @@ public class FileUploadService {
         fileDB.setData(file.getBytes());
         fileDB.setTime(date.getTime());
         fileDB.setType(file.getContentType());
-        return fileMetadataRepository.save(fileDB);
+        fileMetadataRepository.save(fileDB);
     }
 
     public void deleteFile(String fileId) {
